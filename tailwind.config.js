@@ -18,6 +18,7 @@ module.exports = {
         '128': '32rem',
         '144': '36rem',
         '160': '40rem',
+        '200': '60rem',
       },
       colors: {
         'primary': "rgb(14,25,54)"

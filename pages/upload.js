@@ -60,7 +60,7 @@ export default function upload(initialSession){
                             <label>Title: </label>
                             <input className="bg-white text-black p-1 text-2xl my-2 rounded-md" ref={titleRef} required></input>
                             <div className="flex items-center">
-                            <label>Symptopms: </label>
+                            <label>Symptoms: </label>
                             <textarea className="bg-white text-black p-1 text-2xl my-2 rounded-md" ref={symptomRef} required></textarea>
                             </div>
                             <div className="flex items-center">

@@ -1,16 +1,18 @@
 import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs"
 import { BsSearch } from "react-icons/bs"
 import Link from "next/link"
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { MdUpload } from "react-icons/md"
 import { useSupabaseClient } from "@supabase/auth-helpers-react"
 import { useRouter } from "next/router"
+import Image from "next/image"
 
 export default function Home({initialSession}){
   const supabase = useSupabaseClient()
   const session = initialSession
   const searchRef = useRef()
   const router = useRouter()
+  const [posts, setPosts] = useState([])
 
   useEffect(() => {
     fetchPosts()
@@ -32,10 +34,11 @@ export default function Home({initialSession}){
 
   function fetchPosts(){
     supabase.from('posts')
-      .select('id, title, symptoms, sources, photo, created_at, author')
+      .select('id, title, symptoms, sources, photo, created_at, author, authorName')
       .order('created_at', {ascending: false})
       .then(result => {
         console.log(result)
+        setPosts(result.data)
       })
   }
 
@@ -66,8 +69,23 @@ export default function Home({initialSession}){
       </div>
 
       <div className="w-full mx-auto bg-none bg-primary">
-        <div className="w-144 mx-auto p-8">
+        <div className="w-200 mx-auto p-8">
           <h1 className="text-5xl font-bold">New Posts</h1>
+          {posts?.length > 0 && posts.map(post => (
+            <div className="bg-cyan-100 p-4 rounded-xl text-black my-8">
+              <h1 className="text-4xl font-bold pb-2">{post.title}</h1>
+              <Image
+                src={post.photo}
+                width="640"
+                height="200"
+                >
+
+              </Image>
+              <h1 className="text-2xl">Symptoms: <span className="text-blue-700">{post.symptoms}</span></h1>
+              <h1 className="text-2xl">Sources: <span className="text-blue-700">{post.sources}</span></h1>
+              <h1 className="text-2xl">Posted by {post.authorName} at {new Date(post.created_at).toLocaleString()}</h1>
+            </div>
+          ))}
         </div>
       </div>
       
