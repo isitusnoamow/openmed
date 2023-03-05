@@ -19,6 +19,9 @@ module.exports = {
         '144': '36rem',
         '160': '40rem',
       },
+      colors: {
+        'primary': "rgb(14,25,54)"
+      }
     },
   },
   plugins: [],
